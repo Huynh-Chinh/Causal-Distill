@@ -51,9 +51,9 @@ from transformers import RobertaConfig
 
 logger = logging.get_logger(__name__)
 
-_CHECKPOINT_FOR_DOC = "roberta-base-cased"
-_CONFIG_FOR_DOC = "RobertaConfig"
-_TOKENIZER_FOR_DOC = "RobertaTokenizer"
+# _CHECKPOINT_FOR_DOC = "roberta-base-cased"
+# _CONFIG_FOR_DOC = "RobertaConfig"
+# _TOKENIZER_FOR_DOC = "RobertaTokenizer"
 
 ROBERTA_PRETRAINED_MODEL_ARCHIVE_LIST = [
     "roberta-base-cased",
@@ -757,67 +757,67 @@ class RobertaForPreTrainingOutput(ModelOutput):
     hidden_states: Optional[Tuple[torch.FloatTensor]] = None
     attentions: Optional[Tuple[torch.FloatTensor]] = None
 
+#
+# ROBERTA_START_DOCSTRING = r"""
+#     This model inherits from :class:`~transformers.PreTrainedModel`. Check the superclass documentation for the generic
+#     methods the library implements for all its model (such as downloading or saving, resizing the input embeddings,
+#     pruning heads etc.)
+#     This model is also a PyTorch `torch.nn.Module <https://pytorch.org/docs/stable/nn.html#torch.nn.Module>`__
+#     subclass. Use it as a regular PyTorch Module and refer to the PyTorch documentation for all matter related to
+#     general usage and behavior.
+#     Parameters:
+#         config (:class:`~transformers.BertConfig`): Model configuration class with all the parameters of the model.
+#             Initializing with a config file does not load the weights associated with the model, only the
+#             configuration. Check out the :meth:`~transformers.PreTrainedModel.from_pretrained` method to load the model
+#             weights.
+# """
 
-ROBERTA_START_DOCSTRING = r"""
-    This model inherits from :class:`~transformers.PreTrainedModel`. Check the superclass documentation for the generic
-    methods the library implements for all its model (such as downloading or saving, resizing the input embeddings,
-    pruning heads etc.)
-    This model is also a PyTorch `torch.nn.Module <https://pytorch.org/docs/stable/nn.html#torch.nn.Module>`__
-    subclass. Use it as a regular PyTorch Module and refer to the PyTorch documentation for all matter related to
-    general usage and behavior.
-    Parameters:
-        config (:class:`~transformers.BertConfig`): Model configuration class with all the parameters of the model.
-            Initializing with a config file does not load the weights associated with the model, only the
-            configuration. Check out the :meth:`~transformers.PreTrainedModel.from_pretrained` method to load the model
-            weights.
-"""
-
-ROBERTA_INPUTS_DOCSTRING = r"""
-    Args:
-        input_ids (:obj:`torch.LongTensor` of shape :obj:`({0})`):
-            Indices of input sequence tokens in the vocabulary.
-            Indices can be obtained using :class:`~transformers.BertTokenizer`. See
-            :meth:`transformers.PreTrainedTokenizer.encode` and :meth:`transformers.PreTrainedTokenizer.__call__` for
-            details.
-            `What are input IDs? <../glossary.html#input-ids>`__
-        attention_mask (:obj:`torch.FloatTensor` of shape :obj:`({0})`, `optional`):
-            Mask to avoid performing attention on padding token indices. Mask values selected in ``[0, 1]``:
-            - 1 for tokens that are **not masked**,
-            - 0 for tokens that are **masked**.
-            `What are attention masks? <../glossary.html#attention-mask>`__
-        token_type_ids (:obj:`torch.LongTensor` of shape :obj:`({0})`, `optional`):
-            Segment token indices to indicate first and second portions of the inputs. Indices are selected in ``[0,
-            1]``:
-            - 0 corresponds to a `sentence A` token,
-            - 1 corresponds to a `sentence B` token.
-            `What are token type IDs? <../glossary.html#token-type-ids>`_
-        position_ids (:obj:`torch.LongTensor` of shape :obj:`({0})`, `optional`):
-            Indices of positions of each input sequence tokens in the position embeddings. Selected in the range ``[0,
-            config.max_position_embeddings - 1]``.
-            `What are position IDs? <../glossary.html#position-ids>`_
-        head_mask (:obj:`torch.FloatTensor` of shape :obj:`(num_heads,)` or :obj:`(num_layers, num_heads)`, `optional`):
-            Mask to nullify selected heads of the self-attention modules. Mask values selected in ``[0, 1]``:
-            - 1 indicates the head is **not masked**,
-            - 0 indicates the head is **masked**.
-        inputs_embeds (:obj:`torch.FloatTensor` of shape :obj:`({0}, hidden_size)`, `optional`):
-            Optionally, instead of passing :obj:`input_ids` you can choose to directly pass an embedded representation.
-            This is useful if you want more control over how to convert :obj:`input_ids` indices into associated
-            vectors than the model's internal embedding lookup matrix.
-        output_attentions (:obj:`bool`, `optional`):
-            Whether or not to return the attentions tensors of all attention layers. See ``attentions`` under returned
-            tensors for more detail.
-        output_hidden_states (:obj:`bool`, `optional`):
-            Whether or not to return the hidden states of all layers. See ``hidden_states`` under returned tensors for
-            more detail.
-        return_dict (:obj:`bool`, `optional`):
-            Whether or not to return a :class:`~transformers.file_utils.ModelOutput` instead of a plain tuple.
-"""
+# ROBERTA_INPUTS_DOCSTRING = r"""
+#     Args:
+#         input_ids (:obj:`torch.LongTensor` of shape :obj:`({0})`):
+#             Indices of input sequence tokens in the vocabulary.
+#             Indices can be obtained using :class:`~transformers.BertTokenizer`. See
+#             :meth:`transformers.PreTrainedTokenizer.encode` and :meth:`transformers.PreTrainedTokenizer.__call__` for
+#             details.
+#             `What are input IDs? <../glossary.html#input-ids>`__
+#         attention_mask (:obj:`torch.FloatTensor` of shape :obj:`({0})`, `optional`):
+#             Mask to avoid performing attention on padding token indices. Mask values selected in ``[0, 1]``:
+#             - 1 for tokens that are **not masked**,
+#             - 0 for tokens that are **masked**.
+#             `What are attention masks? <../glossary.html#attention-mask>`__
+#         token_type_ids (:obj:`torch.LongTensor` of shape :obj:`({0})`, `optional`):
+#             Segment token indices to indicate first and second portions of the inputs. Indices are selected in ``[0,
+#             1]``:
+#             - 0 corresponds to a `sentence A` token,
+#             - 1 corresponds to a `sentence B` token.
+#             `What are token type IDs? <../glossary.html#token-type-ids>`_
+#         position_ids (:obj:`torch.LongTensor` of shape :obj:`({0})`, `optional`):
+#             Indices of positions of each input sequence tokens in the position embeddings. Selected in the range ``[0,
+#             config.max_position_embeddings - 1]``.
+#             `What are position IDs? <../glossary.html#position-ids>`_
+#         head_mask (:obj:`torch.FloatTensor` of shape :obj:`(num_heads,)` or :obj:`(num_layers, num_heads)`, `optional`):
+#             Mask to nullify selected heads of the self-attention modules. Mask values selected in ``[0, 1]``:
+#             - 1 indicates the head is **not masked**,
+#             - 0 indicates the head is **masked**.
+#         inputs_embeds (:obj:`torch.FloatTensor` of shape :obj:`({0}, hidden_size)`, `optional`):
+#             Optionally, instead of passing :obj:`input_ids` you can choose to directly pass an embedded representation.
+#             This is useful if you want more control over how to convert :obj:`input_ids` indices into associated
+#             vectors than the model's internal embedding lookup matrix.
+#         output_attentions (:obj:`bool`, `optional`):
+#             Whether or not to return the attentions tensors of all attention layers. See ``attentions`` under returned
+#             tensors for more detail.
+#         output_hidden_states (:obj:`bool`, `optional`):
+#             Whether or not to return the hidden states of all layers. See ``hidden_states`` under returned tensors for
+#             more detail.
+#         return_dict (:obj:`bool`, `optional`):
+#             Whether or not to return a :class:`~transformers.file_utils.ModelOutput` instead of a plain tuple.
+# """
 
 
-@add_start_docstrings(
-    "The bare Bert Model transformer outputting raw hidden-states without any specific head on top.",
-    ROBERTA_START_DOCSTRING,
-)
+# @add_start_docstrings(
+#     "The bare Bert Model transformer outputting raw hidden-states without any specific head on top.",
+#     ROBERTA_START_DOCSTRING,
+# )
 class RobertaModel(RobertaPreTrainedModel):
     """
     The model can behave as an encoder (with only self-attention) as well as a decoder, in which case a layer of
@@ -855,13 +855,13 @@ class RobertaModel(RobertaPreTrainedModel):
         for layer, heads in heads_to_prune.items():
             self.encoder.layer[layer].attention.prune_heads(heads)
 
-    @add_start_docstrings_to_model_forward(ROBERTA_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
-    @add_code_sample_docstrings(
-        tokenizer_class=_TOKENIZER_FOR_DOC,
-        checkpoint=_CHECKPOINT_FOR_DOC,
-        output_type=BaseModelOutputWithPoolingAndCrossAttentions,
-        config_class=_CONFIG_FOR_DOC,
-    )
+    # @add_start_docstrings_to_model_forward(ROBERTA_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
+    # @add_code_sample_docstrings(
+    #     tokenizer_class=_TOKENIZER_FOR_DOC,
+    #     checkpoint=_CHECKPOINT_FOR_DOC,
+    #     output_type=BaseModelOutputWithPoolingAndCrossAttentions,
+    #     config_class=_CONFIG_FOR_DOC,
+    # )
     def forward(
             self,
             input_ids=None,
@@ -1002,13 +1002,13 @@ class RobertaModel(RobertaPreTrainedModel):
         )
 
 
-@add_start_docstrings(
-    """
-    Bert Model with two heads on top as done during the pretraining: a `masked language modeling` head and a `next
-    sentence prediction (classification)` head.
-    """,
-    ROBERTA_START_DOCSTRING,
-)
+# @add_start_docstrings(
+#     """
+#     Bert Model with two heads on top as done during the pretraining: a `masked language modeling` head and a `next
+#     sentence prediction (classification)` head.
+#     """,
+#     ROBERTA_START_DOCSTRING,
+# )
 class RobertaForPreTraining(RobertaPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
@@ -1024,8 +1024,8 @@ class RobertaForPreTraining(RobertaPreTrainedModel):
     def set_output_embeddings(self, new_embeddings):
         self.cls.predictions.decoder = new_embeddings
 
-    @add_start_docstrings_to_model_forward(ROBERTA_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
-    @replace_return_docstrings(output_type=RobertaForPreTrainingOutput, config_class=_CONFIG_FOR_DOC)
+    # @add_start_docstrings_to_model_forward(ROBERTA_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
+    # @replace_return_docstrings(output_type=RobertaForPreTrainingOutput, config_class=_CONFIG_FOR_DOC)
     def forward(
             self,
             input_ids=None,
@@ -1093,9 +1093,9 @@ class RobertaForPreTraining(RobertaPreTrainedModel):
         )
 
 
-@add_start_docstrings(
-    """Bert Model with a `language modeling` head on top for CLM fine-tuning. """, ROBERTA_START_DOCSTRING
-)
+# @add_start_docstrings(
+#     """Bert Model with a `language modeling` head on top for CLM fine-tuning. """, ROBERTA_START_DOCSTRING
+# )
 class RobertaLMHeadModel(RobertaPreTrainedModel):
     _keys_to_ignore_on_load_unexpected = [r"pooler"]
     _keys_to_ignore_on_load_missing = [r"position_ids", r"predictions.decoder.bias"]
@@ -1117,8 +1117,8 @@ class RobertaLMHeadModel(RobertaPreTrainedModel):
     def set_output_embeddings(self, new_embeddings):
         self.cls.predictions.decoder = new_embeddings
 
-    @add_start_docstrings_to_model_forward(ROBERTA_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
-    @replace_return_docstrings(output_type=CausalLMOutputWithCrossAttentions, config_class=_CONFIG_FOR_DOC)
+    # @add_start_docstrings_to_model_forward(ROBERTA_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
+    # @replace_return_docstrings(output_type=CausalLMOutputWithCrossAttentions, config_class=_CONFIG_FOR_DOC)
     def forward(
             self,
             input_ids=None,
@@ -1224,7 +1224,7 @@ class RobertaLMHeadModel(RobertaPreTrainedModel):
         return reordered_past
 
 
-@add_start_docstrings("""Bert Model with a `language modeling` head on top. """, ROBERTA_START_DOCSTRING)
+# @add_start_docstrings("""Bert Model with a `language modeling` head on top. """, ROBERTA_START_DOCSTRING)
 class RobertaForMaskedLM(RobertaPreTrainedModel):
     _keys_to_ignore_on_load_unexpected = [r"pooler"]
     _keys_to_ignore_on_load_missing = [r"position_ids", r"predictions.decoder.bias"]
@@ -1249,13 +1249,13 @@ class RobertaForMaskedLM(RobertaPreTrainedModel):
     def set_output_embeddings(self, new_embeddings):
         self.cls.predictions.decoder = new_embeddings
 
-    @add_start_docstrings_to_model_forward(ROBERTA_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
-    @add_code_sample_docstrings(
-        tokenizer_class=_TOKENIZER_FOR_DOC,
-        checkpoint=_CHECKPOINT_FOR_DOC,
-        output_type=MaskedLMOutput,
-        config_class=_CONFIG_FOR_DOC,
-    )
+    # @add_start_docstrings_to_model_forward(ROBERTA_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
+    # @add_code_sample_docstrings(
+    #     tokenizer_class=_TOKENIZER_FOR_DOC,
+    #     checkpoint=_CHECKPOINT_FOR_DOC,
+    #     output_type=MaskedLMOutput,
+    #     config_class=_CONFIG_FOR_DOC,
+    # )
     def forward(
             self,
             input_ids=None,
