@@ -121,11 +121,11 @@ class LmSeqsDataset(Dataset):
         Too short sequences are simply removed. This could be tuned.
         """
         init_size = len(self)
-        indices = self.lengths > 11
+        indices = self.lengths > 3
         self.token_ids = self.token_ids[indices]
         self.lengths = self.lengths[indices]
         new_size = len(self)
-        logger.info(f"Remove {init_size - new_size} too short (<=11 tokens) sequences.")
+        logger.info(f"Remove {init_size - new_size} too short (<=3 tokens) sequences.")
 
     def remove_unknown_sequences(self):
         """

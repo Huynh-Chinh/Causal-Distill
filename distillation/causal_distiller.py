@@ -16,11 +16,11 @@
     Adapted in part from Facebook, Inc XLM model (https://github.com/facebookresearch/XLM)
 """
 import math
-import os
+#import os
 import time
 
 import psutil
-import torch
+#import torch
 from torch import nn
 from torch.optim import AdamW
 from torch.utils.data import BatchSampler, DataLoader, RandomSampler
@@ -28,48 +28,48 @@ from torch.utils.data.distributed import DistributedSampler
 from tqdm import tqdm
 
 from grouped_batch_sampler import GroupedBatchSampler, create_lengths_groups
-from lm_seqs_dataset import LmSeqsDataset
+#from lm_seqs_dataset import LmSeqsDataset
 from transformers import get_linear_schedule_with_warmup
-from utils import logger
+#from utils import logger
 
 try:
     from torch.utils.tensorboard import SummaryWriter
 except ImportError:
     from tensorboardX import SummaryWriter
 
-import argparse
-import json
-import os
-import pickle
-import shutil
+#import argparse
+#import json
+#import os
+#import pickle
+#import shutil
 import random
 
-import numpy as np
+#import numpy as np
 import torch
 
-from distiller import Distiller
+#from distiller import Distiller
 from lm_seqs_dataset import LmSeqsDataset
-from transformers import (
-    AutoConfig,
-    BertConfig,
-    BertForMaskedLM,
-    BertTokenizer,
-    DistilBertConfig,
-    DistilBertTokenizer,
-    GPT2Config,
-    GPT2LMHeadModel,
-    GPT2Tokenizer,
-    RobertaConfig,
-    RobertaForMaskedLM,
-    RobertaTokenizer,
-    AutoTokenizer,
-    AutoModelForMaskedLM,
-)
+#from transformers import (
+#    AutoConfig,
+#    BertConfig,
+#    BertForMaskedLM,
+#    BertTokenizer,
+#    DistilBertConfig,
+#    DistilBertTokenizer,
+#    GPT2Config,
+#    GPT2LMHeadModel,
+#    GPT2Tokenizer,
+#    RobertaConfig,
+#    RobertaForMaskedLM,
+#    RobertaTokenizer,
+#    AutoTokenizer,
+#    AutoModelForMaskedLM,
+#)
 from utils import git_log, init_gpu_params, logger, set_seed
-from datasets import load_dataset
+#from datasets import load_dataset
 from counterfactual_utils import *
-import wandb
-from models.modeling_distilbert import DistilBertForMaskedLM
+#import wandb
+#from models.modeling_distilbert import DistilBertForMaskedLM
 
 # Examples of interchange.
 # activations_counterfactual_teacher = get_activation_at(

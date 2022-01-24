@@ -45,9 +45,13 @@ from transformers import (
     RobertaConfig,
     RobertaForMaskedLM,
     RobertaTokenizer,
+    AutoTokenizer,
 )
 from models.modeling_distilbert import DistilBertForMaskedLM # we need to customize it a little.
 from models.modeling_bert import BertForMaskedLM # we need to customize it a little.
+from models.modeling_distilroberta import DistilRobertaForMaskedLM # we need to customize it a little.
+from models.modeling_roberta import RobertaForMaskedLM # we need to customize it a little.
+
 from utils import git_log, init_gpu_params, logger, set_seed
 
 
@@ -56,6 +60,8 @@ MODEL_CLASSES = {
     "roberta": (RobertaConfig, RobertaForMaskedLM, RobertaTokenizer),
     "bert": (BertConfig, BertForMaskedLM, BertTokenizer),
     "gpt2": (GPT2Config, GPT2LMHeadModel, GPT2Tokenizer),
+    "viSoBERT": (RobertaConfig, RobertaForMaskedLM, AutoTokenizer),
+    "distilviSoBERT": (RobertaConfig, DistilRobertaForMaskedLM, AutoTokenizer),
 }
 
 
@@ -70,19 +76,21 @@ def sanity_checks(args):
     assert (args.alpha_mlm > 0.0 and args.alpha_clm == 0.0) or (args.alpha_mlm == 0.0 and args.alpha_clm > 0.0)
     if args.mlm:
         assert os.path.isfile(args.token_counts)
-        assert (args.student_type in ["roberta", "distilbert"]) and (args.teacher_type in ["roberta", "bert"])
+        assert (args.student_type in ["roberta", "distilbert", "distilviSoBERT"]) and (args.teacher_type in ["roberta", "bert", "viSoBERT"])
     else:
         assert (args.student_type in ["gpt2"]) and (args.teacher_type in ["gpt2"])
 
     assert args.teacher_type == args.student_type or (
         args.student_type == "distilbert" and args.teacher_type == "bert"
+    )or (
+        args.student_type == "distilviSoBERT" and args.teacher_type == "viSoBERT"
     )
     assert os.path.isfile(args.student_config)
     if args.student_pretrained_weights is not None:
         assert os.path.isfile(args.student_pretrained_weights)
 
     if args.freeze_token_type_embds:
-        assert args.student_type in ["roberta"]
+        assert args.student_type in ["roberta", "distilviSoBERT"]
 
     assert args.alpha_ce >= 0.0
     assert args.alpha_mlm >= 0.0
@@ -95,15 +103,15 @@ def sanity_checks(args):
 
 
 def freeze_pos_embeddings(student, args):
-    if args.student_type == "roberta":
-        student.roberta.embeddings.position_embeddings.weight.requires_grad = False
+    if args.student_type == "roberta" or args.student_type == "distilviSoBERT":
+       pass # student.embeddings.position_embeddings.weight.requires_grad = False
     elif args.student_type == "gpt2":
         student.transformer.wpe.weight.requires_grad = False
 
 
 def freeze_token_type_embeddings(student, args):
-    if args.student_type == "roberta":
-        student.roberta.embeddings.token_type_embeddings.weight.requires_grad = False
+    if args.student_type == "roberta" or args.student_type == "distilviSoBERT":
+        pass #student.embeddings.token_type_embeddings.weight.requires_grad = False
 
 
 def prepare_distiller(args):
@@ -150,7 +158,7 @@ def prepare_distiller(args):
         special_tok_ids[tok_name] = tokenizer.all_special_ids[idx]
     logger.info(f"Special tokens {special_tok_ids}")
     args.special_tok_ids = special_tok_ids
-    args.max_model_input_size = tokenizer.max_model_input_sizes[args.teacher_name]
+    args.max_model_input_size = 256 # tokenizer.max_model_input_sizes[args.teacher_name]
 
     # DATA LOADER #
     logger.info(f"Loading data from {args.data_file}")
@@ -210,7 +218,11 @@ def prepare_distiller(args):
     assert student.config.max_position_embeddings == teacher.config.max_position_embeddings
     if args.mlm:
         assert token_probs.size(0) == stu_architecture_config.vocab_size
-
+ 
+    if args.n_gpu > 0:
+        args.multi_gpu = True
+    else:
+        args.multi_gpu = False
     # DISTILLER #
     torch.cuda.empty_cache()
     distiller = CausalDistiller(
@@ -244,7 +256,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--student_type",
         type=str,
-        choices=["distilbert", "roberta", "gpt2"],
+        choices=["distilviSoBERT","distilbert", "roberta", "gpt2"],
         help="The student type (DistilBERT, RoBERTa).",
     )
     parser.add_argument("--student_config", type=str, help="Path to the student configuration.")
@@ -253,7 +265,7 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        "--teacher_type", choices=["bert", "roberta", "gpt2"], help="Teacher type (BERT, RoBERTa)."
+        "--teacher_type", choices=["viSoBERT","bert", "roberta", "gpt2"], help="Teacher type (BERT, RoBERTa)."
     )
     parser.add_argument("--teacher_name", type=str, help="The teacher model.")
 
